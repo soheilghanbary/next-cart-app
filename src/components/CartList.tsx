@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sheet"
 
 import { Icons } from "./icons"
+import { Pre } from "./Pre"
 import { Button } from "./ui/button"
 
 export function CartList() {

@@ -7,9 +7,11 @@ export const SaveCarts = () => {
   const { carts } = useCartStore()
 
   useEffect(() => {
-    carts.length
-      ? localStorage.setItem("carts", JSON.stringify(carts))
-      : localStorage.removeItem("carts")
+    if (typeof window !== "undefined") {
+      carts.length
+        ? window.localStorage.setItem("carts", JSON.stringify(carts))
+        : window.localStorage.removeItem("carts")
+    }
   }, [carts])
 
   return null

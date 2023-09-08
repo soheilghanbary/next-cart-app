@@ -1,16 +1,11 @@
-import { ProductList } from "@/components/ProductList"
-import { SaveCarts } from "@/components/SaveCarts"
+import { Suspense } from "react"
 
-export async function getAllProducts() {
-  const res = await fetch("https://fakestoreapi.com/products")
-  return res.json()
-}
+import { ProductList } from "@/components/ProductList"
+
 export default async function HomePage() {
-  const products = await getAllProducts()
   return (
-    <div>
-      <ProductList products={products} />
-      <SaveCarts />
-    </div>
+    <Suspense fallback={<p>loading product list</p>}>
+      <ProductList />
+    </Suspense>
   )
 }

@@ -12,7 +12,10 @@ type CartStore = {
 }
 
 export const useCartStore = create<CartStore>((set) => ({
-  carts: JSON.parse(localStorage.getItem("carts")!) || [],
+  carts:
+    typeof window !== "undefined"
+      ? JSON.parse(window.localStorage.getItem("carts")!) || []
+      : [],
   addCart: (item) =>
     set((state) => ({ carts: [...state.carts, { ...item, quantity: 1 }] })),
   removeCart: (itemId) =>
