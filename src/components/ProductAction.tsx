@@ -8,7 +8,7 @@ import { Button } from "./ui/button"
 import { Skeleton } from "./ui/skeleton"
 
 const ProductEvents = (product: Product) => {
-  const { carts, addCart, updateQuantity } = useCartStore()
+  const { carts, addCart, updateQuantity, removeCart } = useCartStore()
   const isAddedtoCart = carts.find((cart) => cart.id === product.id)
 
   return (
@@ -25,16 +25,25 @@ const ProductEvents = (product: Product) => {
             <Icons.plus className="h-4 w-4" />
           </Button>
           {isAddedtoCart.quantity}
-          <Button
-            size={"icon"}
-            variant={"outline"}
-            disabled={isAddedtoCart.quantity === 1}
-            onClick={() =>
-              updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1)
-            }
-          >
-            <Icons.min className="h-4 w-4" />
-          </Button>
+          {isAddedtoCart.quantity === 1 ? (
+            <Button
+              size={"icon"}
+              variant={"outline"}
+              onClick={() => removeCart(isAddedtoCart.id)}
+            >
+              <Icons.trash className="h-4 w-4 text-rose-500" />
+            </Button>
+          ) : (
+            <Button
+              size={"icon"}
+              variant={"outline"}
+              onClick={() =>
+                updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1)
+              }
+            >
+              <Icons.min className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       ) : (
         <Button onClick={() => addCart(product)} className="w-full">
