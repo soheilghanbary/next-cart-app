@@ -6,7 +6,7 @@ import { ThemeToggle } from "../ThemeToggle"
 export const SiteHeader = async () => {
   return (
     <header className="sticky top-0 z-50 shrink-0 bg-background">
-      <section className="container mx-auto flex items-center justify-between px-4 py-2 md:p-4">
+      <section className="container mx-auto flex items-center justify-between p-4">
         <Logo />
         <SearchBox />
         <nav className="flex items-center gap-2">
