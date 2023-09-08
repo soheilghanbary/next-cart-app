@@ -52,7 +52,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-none select-none;
     direction: rtl;
   }
   body {

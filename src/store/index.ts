@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import { create } from "zustand"
 
 type CartItem = Product & {
@@ -16,23 +17,20 @@ export const useCartStore = create<CartStore>((set) => ({
     typeof window !== "undefined"
       ? JSON.parse(window.localStorage.getItem("carts")!) || []
       : [],
-  addCart: (item) =>
-    set((state) => ({ carts: [...state.carts, { ...item, quantity: 1 }] })),
-  removeCart: (itemId) =>
+  addCart: (item) => {
+    toast.success("محصول به سبد خرید اضافه شد")
+    set((state) => ({ carts: [...state.carts, { ...item, quantity: 1 }] }))
+  },
+  removeCart: (itemId) => {
+    toast.error("محصول از سبد خرید حذف شد")
     set((state) => ({
       carts: state.carts.filter((item) => item.id !== itemId),
-    })),
-  updateQuantity: (itemId, newQuantity) => {
-    if (newQuantity === 0) {
-      set((state) => ({
-        carts: state.carts.filter((cart) => cart.id !== itemId),
-      }))
-    } else {
-      set((state) => ({
-        carts: state.carts.map((item) =>
-          item.id === itemId ? { ...item, quantity: newQuantity } : item
-        ),
-      }))
-    }
+    }))
   },
+  updateQuantity: (itemId, newQuantity) =>
+    set((state) => ({
+      carts: state.carts.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      ),
+    })),
 }))

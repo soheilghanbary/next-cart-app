@@ -1,9 +1,7 @@
 import { CartList } from "../CartList"
-import { Icons } from "../icons"
 import { Logo } from "../Logo"
 import { SearchBox } from "../SearchBox"
 import { ThemeToggle } from "../ThemeToggle"
-import { Button } from "../ui/button"
 
 export const SiteHeader = async () => {
   return (
