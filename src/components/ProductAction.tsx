@@ -8,43 +8,34 @@ import { Button } from "./ui/button"
 import { Skeleton } from "./ui/skeleton"
 
 const ProductEvents = (product: Product) => {
-  const { carts, addCart, updateQuantity, removeCart } = useCartStore()
+  const { carts, addCart, updateQuantity } = useCartStore()
   const isAddedtoCart = carts.find((cart) => cart.id === product.id)
 
   return (
     <>
       {isAddedtoCart ? (
-        <section className="flex items-center justify-between">
-          <div className="flex flex-1 items-center gap-4">
-            <Button
-              size={"icon"}
-              variant={"outline"}
-              onClick={() =>
-                updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity + 1)
-              }
-            >
-              <Icons.plus className="h-4 w-4" />
-            </Button>
-            {isAddedtoCart.quantity}
-            <Button
-              size={"icon"}
-              variant={"outline"}
-              disabled={isAddedtoCart.quantity === 1}
-              onClick={() =>
-                updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1)
-              }
-            >
-              <Icons.min className="h-4 w-4" />
-            </Button>
-          </div>
+        <div className="flex flex-1 items-center justify-center gap-4">
           <Button
             size={"icon"}
-            variant={"destructive"}
-            onClick={() => removeCart(product.id)}
+            variant={"outline"}
+            onClick={() =>
+              updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity + 1)
+            }
           >
-            <Icons.trash className="h-4 w-4" />
+            <Icons.plus className="h-4 w-4" />
           </Button>
-        </section>
+          {isAddedtoCart.quantity}
+          <Button
+            size={"icon"}
+            variant={"outline"}
+            disabled={isAddedtoCart.quantity === 1}
+            onClick={() =>
+              updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1)
+            }
+          >
+            <Icons.min className="h-4 w-4" />
+          </Button>
+        </div>
       ) : (
         <Button onClick={() => addCart(product)} className="w-full">
           افزودن به سبد خرید
