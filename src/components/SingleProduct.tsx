@@ -26,7 +26,7 @@ export const SingleProduct = (product: Product) => {
         <h1 className="text-2xl font-bold leading-8 text-foreground">
           {product.title}
         </h1>
-        <p>{product.price} ریال</p>
+        <p className="text-primary">{product.price} ریال</p>
         <Badge className="w-fit" variant={"secondary"}>
           {product.category}
         </Badge>

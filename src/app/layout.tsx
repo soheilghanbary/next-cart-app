@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 
 import type { Metadata } from "next"
 import { irsans } from "@/assets/fonts"
+import NextTopLoader from "nextjs-toploader"
 
 import { SaveCarts } from "@/components/SaveCarts"
 import { SiteLayout } from "@/components/site/SiteLayout"
@@ -19,6 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={irsans.className}>
+        <NextTopLoader
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={true}
+          easing="ease"
+          speed={200}
+        />
         <SiteLayout>{children}</SiteLayout>
         <SaveCarts />
       </body>

@@ -47,7 +47,7 @@ const CartPayment = () => {
   return (
     <div className="space-y-4">
       <div className="mt-4 text-right">
-        <strong>قیمت نهایی:</strong> {totalPrice} ریال
+        <strong>قیمت نهایی:</strong> {totalPrice.toFixed()} ریال
       </div>
       <p onClick={clear} className="text-xs text-rose-400 hover:underline">
         حذف همه
@@ -122,7 +122,7 @@ const CartTitle = ({ title = "" }) => (
 
 const CartPrice = ({ priec = 0 }) => (
   <p className="text-sm text-muted-foreground">
-    {priec}
+    {priec.toFixed()}
     <span> ریال</span>
   </p>
 )

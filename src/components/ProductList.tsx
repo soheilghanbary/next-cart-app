@@ -14,7 +14,7 @@ const ProductTitle = ({ title = "" }) => (
 )
 
 const ProductPrice = ({ priec = 0 }) => (
-  <p className="text-sm">
+  <p className="text-sm text-primary">
     {priec}
     <span> ریال</span>
   </p>
@@ -31,7 +31,7 @@ export async function Products() {
       {products.map((product: Product) => (
         <Link
           href={`/products/${product.id}`}
-          className="group space-y-4 rounded-lg border bg-card p-4 shadow-sm ring-indigo-500 duration-300 hover:ring-2"
+          className="group space-y-4 rounded-lg border bg-card p-4 shadow-sm ring-primary duration-300 hover:ring-2"
           key={product.id}
         >
           <ProductImage image={product.image} alt={product.title} />
