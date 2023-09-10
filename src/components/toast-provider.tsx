@@ -3,5 +3,5 @@
 import { Toaster } from "sonner"
 
 export function ToastProvider() {
-  return <Toaster richColors style={{ fontFamily: "__irsans_a8e570" }} />
+  return <Toaster style={{ fontFamily: "__irsans_a8e570" }} />
 }

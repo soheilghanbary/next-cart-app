@@ -70,6 +70,7 @@ export const Icons = {
   add_feature: BadgePlus,
   pin: Pin,
   edit: Edit,
+  shoping: ShoppingBasket,
   feature: GitBranchPlus,
   save: Bookmark,
   chart: BarChart2,

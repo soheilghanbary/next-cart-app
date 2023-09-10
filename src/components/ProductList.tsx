@@ -14,7 +14,7 @@ export async function ProductList() {
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {products.map((product: Product) => (
         <div
-          className="space-y-4 rounded-2xl border p-4 shadow"
+          className="group space-y-4 rounded-lg border bg-card p-4 shadow-sm"
           key={product.id}
         >
           <ProductImage image={product.image} alt={product.title} />
@@ -35,7 +35,8 @@ const ProductTitle = ({ title = "" }) => (
 
 const ProductPrice = ({ priec = 0 }) => (
   <p className="text-sm">
-    {priec},000 <span>تومان</span>
+    {priec}
+    <span> ریال</span>
   </p>
 )
 

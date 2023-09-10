@@ -1,6 +1,6 @@
 export const SiteFooter = () => {
   return (
-    <footer className="bottom-0 left-0 w-full border-t p-4">
+    <footer className="bottom-0 left-0 w-full border-t p-4 bg-background">
       <p className="text-center text-sm text-muted-foreground [&>a]:text-foreground [&>a]:underline">
         ساخته شده توسط{" "}
         <a target="_blank" href="https://x.com/soheil_prog">

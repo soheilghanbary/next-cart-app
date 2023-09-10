@@ -1,8 +1,9 @@
 "use client"
 
-import { PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
+import Link from "next/link"
 import { useCartStore } from "@/store"
 
 import { cn } from "@/lib/utils"
@@ -15,14 +16,14 @@ import {
 } from "@/components/ui/sheet"
 
 import { Icons } from "./icons"
-import { Button } from "./ui/button"
+import { Button, buttonVariants } from "./ui/button"
 
 const CartLength = () => {
   const { carts } = useCartStore()
   return (
     <>
       {carts.length ? (
-        <span className="absolute -left-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary p-1 text-center text-xs text-white">
+        <span className="absolute -left-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full border bg-primary p-1.5 text-center text-xs text-primary-foreground">
           {carts.length}
         </span>
       ) : null}
@@ -34,8 +35,30 @@ const CartLengthClient = dynamic(() => Promise.resolve(CartLength), {
   ssr: false,
 })
 
+const CartPayment = () => {
+  const { carts } = useCartStore()
+  const totalPrice = useMemo(
+    () => carts.reduce((total, cart) => total + cart.price * cart.quantity, 0),
+    [carts]
+  )
+
+  if (!carts.length) return
+
+  return (
+    <div className="space-y-4">
+      <div className="mt-4 text-right">
+        <strong>قیمت نهایی:</strong> {totalPrice} ریال
+      </div>
+      <Link href={"/payment"} className={cn("w-full", buttonVariants())}>
+        پرداخت کنید
+      </Link>
+    </div>
+  )
+}
+
 export function CartList() {
   const { carts } = useCartStore()
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -48,19 +71,22 @@ export function CartList() {
         <SheetHeader>
           <SheetTitle className="text-right">لیست سبد خرید شما</SheetTitle>
         </SheetHeader>
-        <section className="mt-8 space-y-4">
-          {carts.map((cart, i) => (
-            <div key={i} className="space-y-4">
-              <div className="flex items-center gap-4">
-                <CartImage image={cart.image} alt={cart.title} />
-                <CartBody>
-                  <CartTitle title={cart.title} />
-                  <CartPrice priec={cart.price} />
-                </CartBody>
+        <section className="flex h-full flex-1 flex-col justify-between pb-4">
+          <section className="mt-8 h-[90vh] space-y-4 overflow-y-scroll">
+            {carts.map((cart, i) => (
+              <div key={i} className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <CartImage image={cart.image} alt={cart.title} />
+                  <CartBody>
+                    <CartTitle title={cart.title} />
+                    <CartPrice priec={cart.price} />
+                  </CartBody>
+                </div>
+                <CartActions {...cart} />
               </div>
-              <CartActions {...cart} />
-            </div>
-          ))}
+            ))}
+          </section>
+          <CartPayment />
         </section>
       </SheetContent>
     </Sheet>
@@ -78,7 +104,7 @@ export const CartImage = ({ image = "", alt = "" }) => {
         sizes="(min-width: 1520px) 230px, (min-width: 1280px) calc(10.91vw + 66px), (min-width: 1040px) calc(25vw - 50px), (min-width: 780px) calc(33.33vw - 50px), calc(50vw - 50px)"
         loading="lazy"
         className={cn(
-          "h-auto rounded-[inherit] object-cover duration-700 ease-in-out",
+          "h-auto rounded-[inherit] object-cover duration-300 ease-in-out",
           loading ? "blur-xl" : "blur-0"
         )}
         onLoadingComplete={() => setLoading(false)}
@@ -93,7 +119,8 @@ const CartTitle = ({ title = "" }) => (
 
 const CartPrice = ({ priec = 0 }) => (
   <p className="text-sm text-muted-foreground">
-    {priec},000 <span>تومان</span>
+    {priec}
+    <span> ریال</span>
   </p>
 )
 

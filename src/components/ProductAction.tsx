@@ -47,6 +47,7 @@ const ProductEvents = (product: Product) => {
         </div>
       ) : (
         <Button onClick={() => addCart(product)} className="w-full">
+          <Icons.shoping className="ml-2 h-4 w-4" />
           افزودن به سبد خرید
         </Button>
       )}
