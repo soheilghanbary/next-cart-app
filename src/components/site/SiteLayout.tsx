@@ -16,7 +16,7 @@ export function SiteLayout({ children }: PropsWithChildren) {
         disableTransitionOnChange
       >
         <SiteHeader />
-        <main className="container mx-auto my-4 min-h-screen px-2">
+        <main className="container mx-auto my-2 min-h-screen px-2">
           {children}
         </main>
         <SiteFooter />
