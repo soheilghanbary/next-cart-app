@@ -1,32 +1,12 @@
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, Suspense } from "react"
+import Link from "next/link"
 
-import { ProductAction } from "./ProductAction"
 import { ProductImage } from "./ProductImage"
+import { ProductLoader } from "./ProductLoader"
 
 export async function getAllProducts() {
   const res = await fetch("https://fakestoreapi.com/products")
   return res.json()
-}
-
-export async function ProductList() {
-  const products = await getAllProducts()
-  return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {products.map((product: Product) => (
-        <div
-          className="group space-y-4 rounded-lg border bg-card p-4 shadow-sm"
-          key={product.id}
-        >
-          <ProductImage image={product.image} alt={product.title} />
-          <ProductBody>
-            <ProductTitle title={product.title} />
-            <ProductPrice priec={product.price} />
-          </ProductBody>
-          <ProductAction {...product} />
-        </div>
-      ))}
-    </div>
-  )
 }
 
 const ProductTitle = ({ title = "" }) => (
@@ -42,4 +22,31 @@ const ProductPrice = ({ priec = 0 }) => (
 
 const ProductBody = ({ children }: PropsWithChildren) => (
   <div className="space-y-2">{children}</div>
+)
+
+export async function Products() {
+  const products = await getAllProducts()
+  return (
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {products.map((product: Product) => (
+        <Link
+          href={`/products/${product.id}`}
+          className="group space-y-4 rounded-lg border bg-card p-4 shadow-sm ring-indigo-500 duration-300 hover:ring-2"
+          key={product.id}
+        >
+          <ProductImage image={product.image} alt={product.title} />
+          <ProductBody>
+            <ProductTitle title={product.title} />
+            <ProductPrice priec={product.price} />
+          </ProductBody>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+export const ProductList = () => (
+  <Suspense fallback={<ProductLoader />}>
+    <Products />
+  </Suspense>
 )

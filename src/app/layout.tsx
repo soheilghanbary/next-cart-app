@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import type { Metadata } from "next"
 import { irsans } from "@/assets/fonts"
 
+import { SaveCarts } from "@/components/SaveCarts"
 import { SiteLayout } from "@/components/site/SiteLayout"
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={irsans.className}>
         <SiteLayout>{children}</SiteLayout>
+        <SaveCarts />
       </body>
     </html>
   )

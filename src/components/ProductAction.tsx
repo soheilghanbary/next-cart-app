@@ -14,7 +14,7 @@ const ProductEvents = (product: Product) => {
   return (
     <>
       {isAddedtoCart ? (
-        <div className="flex flex-1 items-center justify-center gap-4">
+        <div className="flex flex-1 items-center gap-4">
           <Button
             size={"icon"}
             variant={"outline"}
@@ -46,7 +46,7 @@ const ProductEvents = (product: Product) => {
           )}
         </div>
       ) : (
-        <Button onClick={() => addCart(product)} className="w-full">
+        <Button onClick={() => addCart(product)} className="w-fit">
           <Icons.shoping className="ml-2 h-4 w-4" />
           افزودن به سبد خرید
         </Button>
@@ -56,7 +56,7 @@ const ProductEvents = (product: Product) => {
 }
 
 const ProductEventsClient = dynamic(() => Promise.resolve(ProductEvents), {
-  loading: () => <Skeleton className="h-9 w-full"></Skeleton>,
+  loading: () => <Skeleton className="h-9 w-32"></Skeleton>,
   ssr: false,
 })
 

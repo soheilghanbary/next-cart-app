@@ -82,7 +82,7 @@ export const Icons = {
   download: Download,
   trash: Trash,
   upload: UploadCloud,
-  logo: Command,
+  logo: Store,
   date: Calendar,
   clock: Clock,
   close: X,

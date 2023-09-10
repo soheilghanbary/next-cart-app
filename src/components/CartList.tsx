@@ -36,7 +36,7 @@ const CartLengthClient = dynamic(() => Promise.resolve(CartLength), {
 })
 
 const CartPayment = () => {
-  const { carts } = useCartStore()
+  const { carts, clear } = useCartStore()
   const totalPrice = useMemo(
     () => carts.reduce((total, cart) => total + cart.price * cart.quantity, 0),
     [carts]
@@ -49,6 +49,9 @@ const CartPayment = () => {
       <div className="mt-4 text-right">
         <strong>قیمت نهایی:</strong> {totalPrice} ریال
       </div>
+      <p onClick={clear} className="text-xs text-rose-400 hover:underline">
+        حذف همه
+      </p>
       <Link href={"/payment"} className={cn("w-full", buttonVariants())}>
         پرداخت کنید
       </Link>
