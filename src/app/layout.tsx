@@ -6,6 +6,7 @@ import NextTopLoader from "nextjs-toploader"
 
 import { SaveCarts } from "@/components/SaveCarts"
 import { SiteLayout } from "@/components/site/SiteLayout"
+import ReduxProvider from "@/components/ReduxProvider"
 
 export const metadata: Metadata = {
   title: "Next Cart App",
@@ -29,8 +30,10 @@ export default function RootLayout({
           easing="ease"
           speed={200}
         />
-        <SiteLayout>{children}</SiteLayout>
-        <SaveCarts />
+        <ReduxProvider>
+          <SiteLayout>{children}</SiteLayout>
+          <SaveCarts /> 
+        </ReduxProvider>
       </body>
     </html>
   )

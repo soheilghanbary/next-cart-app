@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect } from "react"
-import { useCartStore } from "@/store"
+import { useAppSelector } from "@/hooks/redux-hooks"
 
 export const SaveCarts = () => {
-  const { carts } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
 
   useEffect(() => {
     if (typeof window !== "undefined") {

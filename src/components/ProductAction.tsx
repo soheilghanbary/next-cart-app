@@ -1,14 +1,16 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { useCartStore } from "@/store"
-
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Skeleton } from "./ui/skeleton"
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks"
+import { addCart, removeCart, updateQuantity } from "@/features/slices/cart-slice"
 
 const ProductEvents = (product: Product) => {
-  const { carts, addCart, updateQuantity, removeCart } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
+  const dispatch = useAppDispatch()
+  // const { carts, addCart, updateQuantity, removeCart } = useCartStore()
   const isAddedtoCart = carts.find((cart) => cart.id === product.id)
 
   return (
@@ -19,7 +21,7 @@ const ProductEvents = (product: Product) => {
             size={"icon"}
             variant={"outline"}
             onClick={() =>
-              updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity + 1)
+              dispatch(updateQuantity({ id: isAddedtoCart.id , quantity: isAddedtoCart.quantity + 1}))
             }
           >
             <Icons.plus className="h-4 w-4" />
@@ -29,7 +31,7 @@ const ProductEvents = (product: Product) => {
             <Button
               size={"icon"}
               variant={"outline"}
-              onClick={() => removeCart(isAddedtoCart.id)}
+              onClick={() => dispatch(removeCart(isAddedtoCart.id))}
             >
               <Icons.trash className="h-4 w-4 text-rose-500" />
             </Button>
@@ -38,7 +40,8 @@ const ProductEvents = (product: Product) => {
               size={"icon"}
               variant={"outline"}
               onClick={() =>
-                updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1)
+                // dispatch(updateQuantity(isAddedtoCart.id, isAddedtoCart.quantity - 1))
+              dispatch(updateQuantity({ id: isAddedtoCart.id , quantity: isAddedtoCart.quantity - 1}))
               }
             >
               <Icons.min className="h-4 w-4" />
@@ -46,7 +49,7 @@ const ProductEvents = (product: Product) => {
           )}
         </div>
       ) : (
-        <Button onClick={() => addCart(product)} className="w-fit">
+        <Button onClick={() => dispatch(addCart(product))} className="w-fit">
           <Icons.shoping className="ml-2 h-4 w-4" />
           افزودن به سبد خرید
         </Button>

@@ -4,7 +4,6 @@ import { PropsWithChildren, useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
-import { useCartStore } from "@/store"
 
 import { cn } from "@/lib/utils"
 import {
@@ -17,9 +16,11 @@ import {
 
 import { Icons } from "./icons"
 import { Button, buttonVariants } from "./ui/button"
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks"
+import { clear, removeCart, updateQuantity } from "@/features/slices/cart-slice"
 
 const CartLength = () => {
-  const { carts } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
   return (
     <>
       {carts.length ? (
@@ -36,7 +37,8 @@ const CartLengthClient = dynamic(() => Promise.resolve(CartLength), {
 })
 
 const CartPayment = () => {
-  const { carts, clear } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
+  const dispatch = useAppDispatch()
   const totalPrice = useMemo(
     () => carts.reduce((total, cart) => total + cart.price * cart.quantity, 0),
     [carts]
@@ -49,7 +51,7 @@ const CartPayment = () => {
       <div className="mt-4 text-right">
         <strong>قیمت نهایی:</strong> {totalPrice.toFixed()} ریال
       </div>
-      <p onClick={clear} className="text-xs text-rose-400 hover:underline">
+      <p onClick={() => dispatch(clear())} className="text-xs text-rose-400 hover:underline">
         حذف همه
       </p>
       <Link href={"/payment"} className={cn("w-full", buttonVariants())}>
@@ -60,7 +62,7 @@ const CartPayment = () => {
 }
 
 export function CartList() {
-  const { carts } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
 
   return (
     <Sheet>
@@ -132,7 +134,8 @@ const CartBody = ({ children }: PropsWithChildren) => (
 )
 
 const CartActions = (product: Product) => {
-  const { carts, updateQuantity, removeCart } = useCartStore()
+  const carts = useAppSelector(state => state.carts)
+  const dispatch = useAppDispatch()
   const isAddedtoCart = carts.find((cart) => cart.id === product.id)
 
   return (
@@ -143,7 +146,7 @@ const CartActions = (product: Product) => {
             size={"icon"}
             variant={"outline"}
             onClick={() =>
-              updateQuantity(product.id, isAddedtoCart.quantity + 1)
+              dispatch(updateQuantity({ id: product.id, quantity: isAddedtoCart.quantity + 1 }))
             }
           >
             <Icons.plus className="h-4 w-4" />
@@ -154,7 +157,7 @@ const CartActions = (product: Product) => {
             size={"icon"}
             variant={"outline"}
             onClick={() =>
-              updateQuantity(product.id, isAddedtoCart.quantity - 1)
+              dispatch(updateQuantity({ id: product.id, quantity: isAddedtoCart.quantity - 1 }))
             }
           >
             <Icons.min className="h-4 w-4" />
@@ -164,7 +167,7 @@ const CartActions = (product: Product) => {
       <Button
         size={"icon"}
         variant={"secondary"}
-        onClick={() => removeCart(product.id)}
+        onClick={() => dispatch(removeCart(product.id))}
       >
         <Icons.trash className="h-4 w-4 text-rose-500" />
       </Button>
